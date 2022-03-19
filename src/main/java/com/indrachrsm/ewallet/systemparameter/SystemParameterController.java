@@ -1,5 +1,7 @@
 package com.indrachrsm.ewallet.systemparameter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +21,12 @@ public class SystemParameterController {
     @PostMapping(path = "/system-parameters")
     public ResponseEntity<SystemParameterDto> post(@RequestBody SystemParameterDto systemParameterReqDto) {
         SystemParameter systemParameter = systemParameterReqDto.convertTo(SystemParameter.class);
-        SystemParameter savedSystemParameter = systemParameterService.save(systemParameter);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedSystemParameter.convertTo(SystemParameterDto.class));
+        try {
+            SystemParameter savedSystemParameter = systemParameterService.save(systemParameter);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedSystemParameter.convertTo(SystemParameterDto.class));
+        } catch (JsonProcessingException e) {
+           return ResponseEntity.badRequest().build();
+        }
     }
     
     @GetMapping(path = "system-parameters")

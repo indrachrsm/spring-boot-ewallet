@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import com.indrachrsm.ewallet.factories.TransactionFactory;
 import com.indrachrsm.ewallet.factories.WalletFactory;
+import com.indrachrsm.ewallet.kafka.KafkaProducerService;
 import com.indrachrsm.ewallet.wallet.Wallet;
 import com.indrachrsm.ewallet.wallet.WalletRepository;
 
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -33,6 +35,8 @@ class TransactionControllerTest {
     private WalletRepository walletRepository;
     @Autowired
     private TransactionRepository transactionRepository;
+    @MockBean
+    private KafkaProducerService kafkaProducerService;
 
     private final Faker faker = new Faker();
 
